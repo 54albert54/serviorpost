@@ -1,9 +1,10 @@
-import jwt from 'jsonwebtoken'
+import jwt, { decode } from 'jsonwebtoken'
 import  { Request, Response,} from 'express';
 import { config } from '../config';
+import { TypeData } from '../store/dummy.schema';
 
 const secret = config.secureKey as string 
-function sign(data:any){
+function sign(data:string){
   return jwt.sign(data , secret)
 }
 function getToken(auth: string):string {
@@ -22,21 +23,37 @@ function verify(token: string) {
 }
 
 
-function decodeHeader(req:Request){
+export function decodeHeader(req:Request):any{
   const authorization = req.headers.authorization || '';
   const token = getToken(authorization)
   const decoded = verify(token)
+  
+   
+  return decoded;
 }
-const check ={
-  own:(req:Request,owner:string)=>{
 
+const check ={
+  own:(req:Request,owner:any)=>{
+    //decodificar lo que viene en el heather
+    const decoded = decodeHeader(req)
+
+    //TODO comprobar el decode 
+    
+    if(decoded.id !== owner){
+      throw new Error("you can't edit other user info")
+    }
   },
+  follow:(req:Request)=>{
+    const decoded = decodeHeader(req)
+    console.log('decoded.id  ',decoded.id  );
+    return decoded
+  }
 
 }
 
 
 export const auth = {
-  sign,check
+  sign,check,
 }
 
 

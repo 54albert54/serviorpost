@@ -10,12 +10,12 @@ export type TypeData = {
     name: string;
     userName?: string;
     id: string;
-    passwords: string;
+    password: string;
 };
 export type TypeAuth = {
     name: string;
     id: string;
-    passwords: string;
+    password: string;
     userName?: string;
 };
 export interface AllTypeDataBase {

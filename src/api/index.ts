@@ -4,6 +4,8 @@ import routerApi from "../router";
 // import swaggerUi  from 'swagger-ui-express'
 import bodyParser from "body-parser";
 import { config } from "../config";
+import errorResponse from "../network/error";
+
 
 
 const app = express();
@@ -19,8 +21,14 @@ app.get("/", (_req: any, res: any) => {
 });
 
 
+//Routers
 
 routerApi(app);
+
+//connect()
+
+//las for error response
+app.use(errorResponse);
 
 app.listen(port, () => {
   return console.log(`server is listening on ${port}`);

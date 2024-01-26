@@ -6,26 +6,29 @@ const db: TypeDataBase = {
       id: "1",
       name: "prueba userData",
       userName: "prueba",
-      passwords: "12345",
+      password: "12345",
     },
   ],
   auth: [
     {
       id: "1",
       name: "prueba authData",
-      passwords: "12345",
+      password: "12345",
       userName: "prueba",
     },
   ],
+  post:[
+    
+  ]
 };
 async function list(table: TABLA) {
   return db[table] || [];
 }
-async function get(table: TABLA, name: string) {
+async function get(table: TABLA, id: string) {
   const col = await list(table);
   let response;
   if (col != undefined) {
-    response = col.find((element) => element?.name == name);
+    response = col.find((element:any) => element?.id == id);
   }
   return response;
 }

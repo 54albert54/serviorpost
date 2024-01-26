@@ -1,9 +1,8 @@
-
 import { TABLA, TypeData } from "../../store/dummy.schema";
 import { store as backupStore } from "../../store/dummyDataBase";
-import { v4 as uuidv4 } from 'uuid';
-import authController from '../auth'
-export const controller = (TABLA:TABLA, injectedStored: any) => {
+import bcrypt from "bcrypt";
+import authController from "../auth";
+export const controller = (TABLA: TABLA, injectedStored: any) => {
   let store = injectedStored || null;
   if (!store) {
     store = backupStore;
@@ -15,20 +14,34 @@ export const controller = (TABLA:TABLA, injectedStored: any) => {
     return await store.get(TABLA, name);
   }
   async function upset(data: TypeData) {
-    data.id = uuidv4()
-    authController(store).upset({
-      name:data.name,
-      id:data.id,
-      userName:data.userName,
-      passwords:data.passwords,
-    })
-    const {passwords , ...dataUser} =  data
-    // delete  data.passwords 
-    await store.upset(TABLA, dataUser);
+    authController().upset({
+      name: data.name,
+      id: data.id,
+      userName: data.userName,
+      password: data.password,
+    });
+    data.password = await bcrypt.hash(data.password, 5);
+    const { password, ...dataUser } = data;
+
+    await store.upset(TABLA, data);
+    return dataUser;
   }
   async function remove(id: string) {
     await store.remove(TABLA, id);
   }
+  async function update(body: any) {
+    //actualizar auth
+    authController()
+      .update(body)
+      .then((info) => console.log(info));
+    await store.update(TABLA, body);
+  }
+  async function follow(from:string, to:string) {
+    store.follow(TABLA+'_follow',{
+      user_id:from,
+      follower_id:to
+    })
+  }
 
-  return { list, get, upset, remove };
+  return { list, get, upset, remove, update,follow };
 };
