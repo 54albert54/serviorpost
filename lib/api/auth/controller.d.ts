@@ -5,5 +5,9 @@ export interface TProps {
 }
 export declare const controller: (TABLA: TABLA, injectedStored: any) => {
     upset: (data: TypeAuth) => Promise<void>;
-    query: (userName: string, password: string) => Promise<string>;
+    query: (userName: string, password: string) => Promise<{
+        showData: any;
+        token: string;
+    }>;
+    update: (data: any) => Promise<void>;
 };

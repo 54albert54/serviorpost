@@ -10,6 +10,6 @@ app.use(bodyParser.json())
 app.use(routeMySqlServices)
 
 app.listen(config.mySqlServices.port,()=>{
-  console.log('Remote MicroServices MySql',config.mySqlServices.port);
+  console.log('Remote MicroServices MySql 0.1',config.mySqlServices.port);
   
 })

@@ -1,6 +1,6 @@
-import { TABLA, TypeData, TypeDataBase } from "./dummy.schema";
-declare function list(table: TABLA): Promise<TypeData[]>;
-declare function get(table: TABLA, name: string): Promise<TypeData | undefined>;
+import { TABLA, TypeDataBase } from "./dummy.schema";
+declare function list(table: TABLA): Promise<any>;
+declare function get(table: TABLA, id: string): Promise<any>;
 declare function upset(table: TABLA, data: any): Promise<any>;
 declare function remove(table: TABLA, name: string): void;
 declare function query(table: TABLA, q: any): Promise<any>;

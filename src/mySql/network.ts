@@ -3,6 +3,7 @@ import { estatusSuccess, estatusError } from "../network/response";
 import { store } from "../store/mySql";
 import { TABLA } from "../store/dummy.schema";
 import AuthServices from "../api/auth/index";
+import { decodeHeader } from "../auth";
 
 
 const routeMySqlServices = express.Router()
@@ -12,7 +13,7 @@ routeMySqlServices.get('/:table', list)
 routeMySqlServices.get('/:table/:id', get)
 routeMySqlServices.post('/:table', insert)
 routeMySqlServices.put('/:table/:id', upsert)
-routeMySqlServices.post('/auth/login', login)
+//  routeMySqlServices.post('/auth/login', login)
 
 
 
@@ -27,6 +28,9 @@ async function get(req:Request, res:Response, next:any) {
   estatusSuccess({res,req ,message:datos})
 }
 async function insert(req:Request, res:Response, next:any) {
+  const decoded = decodeHeader(req)
+  console.log('decoded',decoded);
+  
   const datos =  await store.upset(req.params.table as TABLA , req.body, req.params.id)
   
   estatusSuccess({res,req ,message:datos})

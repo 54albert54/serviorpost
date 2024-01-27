@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const otherWay = (METHOD:string , HOST:string,PORT:number, )=>{
+const otherWay =  (METHOD:string , HOST:string,PORT:number, )=>{
   axios({
     method: METHOD,
     url: `${HOST}:${PORT}/post`,

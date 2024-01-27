@@ -1,10 +1,12 @@
 export declare enum TABLA {
     USER = "user",
-    AUTH = "auth"
+    AUTH = "auth",
+    POST = "post"
 }
 export interface TypeDataBase {
     user: TypeData[];
     auth?: TypeAuth[];
+    post?: any;
 }
 export type TypeData = {
     name: string;
@@ -13,10 +15,16 @@ export type TypeData = {
     password: string;
 };
 export type TypeAuth = {
-    name: string;
+    name?: string;
     id: string;
-    password: string;
+    password?: string;
     userName?: string;
+};
+export type TypePost = {
+    title: string;
+    detail: string;
+    owner_id: string;
+    id?: number;
 };
 export interface AllTypeDataBase {
     db: TypeDataBase;
@@ -28,3 +36,4 @@ export interface AllTypeDataBase {
         id: number;
     };
 }
+export type ACTIONS = 'update' | 'follow';

@@ -9,8 +9,7 @@ const connectInfo = {
   password: config.mySql.password,
 };
 
-const array: [] = [];
-array.length;
+
 async function list(table: TABLA) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
@@ -38,7 +37,7 @@ async function get(table: TABLA, id: string) {
     //create a list for followers
     userData.followers = await viewFollowers(table, id);
     userData.youFollow = await viewFollow(table, id);
-    userData.likedPost = await viewPostLike(TABLA.POST, id)
+    userData.viewPostLike = await viewPostLike(TABLA.USER,TABLA.POST, id)
     dataBase = userData;
   } catch (err) {
     console.log(err);
@@ -153,14 +152,14 @@ async function viewFollow(table: TABLA, id: any) {
   }
   return dataBase;
 }
-async function viewPostLike(postTabla:TABLA, id: any) {
+async function viewPostLike(tablaUser:TABLA,tablaPost:TABLA, id: string) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase: any;
 
   try {
 
     const [db, fields] = await connection.query(
-      `SELECT p.id , p.title  FROM ${postTabla} AS p INNER JOIN ${postTabla}_like as postList ON p.id = postList.post_id WHERE  postList.user_id = ${id} `
+      `SELECT u.id , u.name  FROM ${tablaUser} AS u INNER JOIN ${tablaPost}_like as postList ON u.id = postList.user_id WHERE  postList.post_id = ${id} `
     );
     dataBase = db;
   } catch (err) {
@@ -227,7 +226,6 @@ export const store = {
   list,
   get,
   upset,
-  //remove,
   follow,
   update,
   query,
