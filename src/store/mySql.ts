@@ -65,12 +65,17 @@ async function insert(table: TABLA, data: any) {
   return dataBase;
 }
 //update user info
-async function upset(table: TABLA, data: any) {
-  return insert(table, data);
+async function upset(table: TABLA, data: any , id:any) {
+
+  
+  console.log('data upset',data ,id);
+  return id ? update(table,data,id):insert(table, data);
+
 }
 async function query(table: TABLA, q: any) {
   const key = Object.keys(q)[0];
-
+ 
+  
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
@@ -79,6 +84,7 @@ async function query(table: TABLA, q: any) {
     );
     // results contains rows returned by server
     dataBase = db;
+    
   } catch (err) {
     console.log(err);
   }
@@ -86,17 +92,17 @@ async function query(table: TABLA, q: any) {
   return dataBase;
 }
 
-async function update(table: TABLA, data: any) {
+async function update(table: TABLA, data: any ,id:number) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
-    const ownId = data.id;
-    const { id, ...allData } = data;
+   console.log('UPDATE',{data,id});
+   
 
     // delete data.id
     const [db, fields] = await connection.query(
-      `UPDATE ${table} SET ?  WHERE id = ${ownId}`,
-      allData
+      `UPDATE ${table} SET ?  WHERE id = ${id}`,
+      data
     );
     // results contains rows returned by server
     dataBase = db;

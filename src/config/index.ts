@@ -9,6 +9,10 @@ export const config = {
     user:process.env.USER ,
     password:process.env.PASSWORD ,
     database:process.env.DATABASE ,
+  },
+  mySqlServices:{
+    port: process.env.MySqlPORT 
   }
+
 
 }

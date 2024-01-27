@@ -10,7 +10,7 @@ const routerAuth = express.Router();
 routerAuth.post("/login", async (req: Request, res: Response) => {
   const { userName , password} = req.body;
   
-  console.log('data',userName , password);
+
   
 
   

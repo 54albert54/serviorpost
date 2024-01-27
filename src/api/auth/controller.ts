@@ -16,7 +16,8 @@ export const controller = (TABLA: TABLA, injectedStored: any) => {
 
     
     const data = await store.query(TABLA, { userName });
-    console.log('query',data);
+      console.log('data',data);
+      
     
     return bcrypt.compare(password, data[0].password).then(isMatch =>{
       if (isMatch === true) {
