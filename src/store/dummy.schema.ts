@@ -38,4 +38,9 @@ export interface AllTypeDataBase{
   remove:()=>{table:string , id:number}
 }
 
-export type  ACTIONS  = 'update' | 'follow'
+export type  ACTIONS  = 'update' | 'follow' | 'delete'
+
+export type TDeleteID ={
+  postID:string
+  userID:number
+}

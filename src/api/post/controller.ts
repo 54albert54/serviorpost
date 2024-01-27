@@ -23,14 +23,18 @@ export const controller = (TABLA: TABLA, injectedStored: any) => {
   
   }
   async function follow(from:string, to:string) {
-    store.follow(TABLA+'_like',{
+    await store.follow(TABLA+'_like',{
       user_id:from,
       post_id:to
     })
-
   }
 
-  return { list, upset , get ,updatePost , follow
-    //   remove, update,follow 
+  async function deleted(postID:string , userID:string) {
+    const dbRes = await store.deletePost(TABLA,{postID,userID})
+    console.log('dbRes',dbRes);
+    
+  }
+
+  return { list, upset , get ,updatePost , follow,deleted
     };
 };

@@ -52,7 +52,7 @@ routerPosts.put("/:id", async (req: Request, res: Response) => {
           estatusSuccess({
             req,
             res,
-            message: "you change the post successful " + paramsId,
+            message: "you change the post successful " + paramsId+"  "+ user.id,
           })
         )
         .catch((error) =>
@@ -102,13 +102,30 @@ routerPosts.post("/like/:id",
 checkAuth('follow'),
 async (req: Request, res: Response) => {
   const data = decodeHeader(req)
+  const postID = req.params.id
 
   controller()
     .follow(data.id,req.params?.id)
-    .then((user) => estatusSuccess({ req, res, message: "update user info"+ user }))
+    .then((user) => estatusSuccess({ req, res, message: "le diste me gusta al post ID:"+ postID }))
     .catch((error) => estatusError({ req, res, message: "error "+error }));
 });
 
+routerPosts.delete("/:id", 
+// //middleware
+ checkAuth('delete'),
+
+ async (req: Request, res: Response) => {
+  const postId = req.params?.id
+  const dataID = decodeHeader(req).id
+ 
+  
+
+  controller()
+    .deleted(postId,dataID)
+    .then((user) => estatusSuccess({ req, res, message: "Delete user info id "+ dataID }))
+    .catch((error) => estatusError({ req, res, message: "error "+error }));
+}
+);
 
 // updatePost
 

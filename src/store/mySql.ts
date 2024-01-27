@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 import { config } from "../config";
-import { TABLA } from "./dummy.schema";
+import { TABLA, TDeleteID } from "./dummy.schema";
 
 const connectInfo = {
   host: config.mySql.host,
@@ -9,14 +9,16 @@ const connectInfo = {
   password: config.mySql.password,
 };
 
-
 async function list(table: TABLA) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
-    const [db, fields] = await connection.query(`SELECT * FROM ${table} `);
+    const [db, fields] = await connection.query(
+      `SELECT u.id , u.name FROM ${table} as u `
+    );
     // results contains rows returned by server
-    dataBase = db;
+
+    dataBase = db as [];
   } catch (err) {
     console.log(err);
   }
@@ -37,7 +39,7 @@ async function get(table: TABLA, id: string) {
     //create a list for followers
     userData.followers = await viewFollowers(table, id);
     userData.youFollow = await viewFollow(table, id);
-    userData.viewPostLike = await viewPostLike(TABLA.USER,TABLA.POST, id)
+    userData.viewPostLike = await viewPostLike(TABLA.USER, TABLA.POST, id);
     dataBase = userData;
   } catch (err) {
     console.log(err);
@@ -64,17 +66,13 @@ async function insert(table: TABLA, data: any) {
   return dataBase;
 }
 //update user info
-async function upset(table: TABLA, data: any , id:any) {
-
-  
-  console.log('data upset',data ,id);
-  return id ? update(table,data,id):insert(table, data);
-
+async function upset(table: TABLA, data: any, id: any) {
+  console.log("data upset", data, id);
+  return id ? update(table, data, id) : insert(table, data);
 }
 async function query(table: TABLA, q: any) {
   const key = Object.keys(q)[0];
- 
-  
+
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
@@ -83,7 +81,6 @@ async function query(table: TABLA, q: any) {
     );
     // results contains rows returned by server
     dataBase = db;
-    
   } catch (err) {
     console.log(err);
   }
@@ -91,12 +88,11 @@ async function query(table: TABLA, q: any) {
   return dataBase;
 }
 
-async function update(table: TABLA, data: any ,id:number) {
+async function update(table: TABLA, data: any, id: number) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
-   console.log('UPDATE',{data,id});
-   
+    console.log("UPDATE", { data, id });
 
     // delete data.id
     const [db, fields] = await connection.query(
@@ -152,12 +148,11 @@ async function viewFollow(table: TABLA, id: any) {
   }
   return dataBase;
 }
-async function viewPostLike(tablaUser:TABLA,tablaPost:TABLA, id: string) {
+async function viewPostLike(tablaUser: TABLA, tablaPost: TABLA, id: string) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase: any;
 
   try {
-
     const [db, fields] = await connection.query(
       `SELECT u.id , u.name  FROM ${tablaUser} AS u INNER JOIN ${tablaPost}_like as postList ON u.id = postList.user_id WHERE  postList.post_id = ${id} `
     );
@@ -177,11 +172,11 @@ async function getPost(table: TABLA, id: string) {
     );
     // results contains rows returned by server
     const getDAta: any = db;
-    console.log('getDAta',getDAta);
-    
+    console.log("getDAta", getDAta);
+
     const { password, ...userData } = getDAta[0];
     //create a list for followers
-     userData.userThatLike = await viewUserLiked(table,TABLA.USER,id)
+    userData.userThatLike = await viewUserLiked(table, TABLA.USER, id);
     // userData.youFollow = await viewFollow(table,id)
     dataBase = userData;
   } catch (err) {
@@ -194,7 +189,6 @@ async function updatePost(table: TABLA, data: any) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
-
     const [db, fields] = await connection.query(
       `UPDATE ${table} SET ?  WHERE id = ${data.idPost} AND owner_id = ${data.user}`,
       data.data
@@ -206,7 +200,7 @@ async function updatePost(table: TABLA, data: any) {
   }
   return dataBase;
 }
-async function viewUserLiked(table: TABLA ,userTabla:TABLA, id: any) {
+async function viewUserLiked(table: TABLA, userTabla: TABLA, id: any) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase: any;
 
@@ -214,6 +208,25 @@ async function viewUserLiked(table: TABLA ,userTabla:TABLA, id: any) {
     const [db, fields] = await connection.query(
       `SELECT u.id , u.name  FROM ${userTabla} AS u INNER JOIN ${table}_like as LikeList ON u.id = LikeList.user_id WHERE  LikeList.post_id = ${id} `
     );
+    dataBase = db;
+  } catch (err) {
+    console.log(err);
+  }
+  return dataBase;
+}
+
+
+async function deletePost(table: TABLA, data:TDeleteID) {
+
+  console.log('table , data',table , data);
+  
+  const connection = await mysql.createConnection(connectInfo);
+  let dataBase;
+  try {
+    const [db, fields] = await connection.query(
+      `DELETE FROM ${table} as P WHERE p.id = ${data.postID} AND p.owner_id = ${data.userID};`,
+    );
+    // results contains rows returned by server
     dataBase = db;
   } catch (err) {
     console.log(err);
@@ -231,4 +244,5 @@ export const store = {
   query,
   getPost,
   updatePost,
+  deletePost
 };
