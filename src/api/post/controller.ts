@@ -7,7 +7,8 @@ export const controller = (TABLA: TABLA, injectedStored: any) => {
     store = backupStore;
   }
   async function list() {
-    return await store.list(TABLA);
+    
+    return await store.listPost(TABLA);
   }
   async function get(id: string) {
     return await store.getPost(TABLA, id);

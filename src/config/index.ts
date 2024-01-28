@@ -1,5 +1,5 @@
 require("dotenv").config();
-console.log('process.env.USER',process.env.DBUSER);
+
 
 export const config = {
   isDev:process.env.ISDEV,

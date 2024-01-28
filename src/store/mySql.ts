@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 import { config } from "../config";
 import { TABLA, TDeleteID } from "./dummy.schema";
 
-console.log('data',config.mySql.user);
+
 
 
 const connectInfo = {
@@ -27,7 +27,8 @@ async function list(table: TABLA) {
   connection.end();
   return dataBase || ["no hay datos"];
 }
-// info de user
+
+// info de user  
 async function get(table: TABLA, id: string) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase: any;
@@ -162,6 +163,21 @@ async function viewPostLike(tablaUser: TABLA, tablaPost: TABLA, id: string) {
   return dataBase;
 }
 //* Post
+async function listPost(table: TABLA) {
+  const connection = await mysql.createConnection(connectInfo);
+  let dataBase;
+  try {
+    const [db, fields] = await connection.query(
+      `SELECT * FROM ${table} as u `
+    );
+
+    dataBase = db as [];
+  } catch (err) {
+    console.log(err);
+  }
+  connection.end();
+  return dataBase || ["no hay datos"];
+}
 async function getPost(table: TABLA, id: string) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase: any;
@@ -238,6 +254,7 @@ export const store = {
   follow,
   update,
   query,
+  listPost,
   getPost,
   updatePost,
   deletePost
