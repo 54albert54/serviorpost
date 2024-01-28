@@ -30,8 +30,8 @@ export const controller = (TABLA: TABLA, injectedStored: any) => {
   }
 
   async function deleted(postID:string , userID:string) {
-    const dbRes = await store.deletePost(TABLA,{postID,userID})
-    console.log('dbRes',dbRes);
+    await store.deletePost(TABLA,{postID,userID})
+
     
   }
 

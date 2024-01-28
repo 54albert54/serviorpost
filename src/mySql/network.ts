@@ -29,7 +29,6 @@ async function get(req:Request, res:Response, next:any) {
 }
 async function insert(req:Request, res:Response, next:any) {
   const decoded = decodeHeader(req)
-  console.log('decoded',decoded);
   
   const datos =  await store.upset(req.params.table as TABLA , req.body, req.params.id)
   

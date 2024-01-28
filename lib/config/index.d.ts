@@ -1,4 +1,5 @@
 export declare const config: {
+    isDev: string | undefined;
     port: string | undefined;
     secureKey: string | undefined;
     mySql: {

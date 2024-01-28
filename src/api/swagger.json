@@ -1,21 +1,13 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "mi api 1.0",
-    "description": "api para una prueba"
+    "title": "API de Gestión de Usuarios y Posts",
+    "description": "La API de Gestión de Usuarios y Posts es una plataforma robusta diseñada para facilitar la gestión eficiente de usuarios y la creación, edición y eliminación de posts. Diseñada con la flexibilidad y la facilidad de uso en mente, esta API es ideal para aplicaciones que requieren un sistema de usuario y publicación dinámico."
   },
-  "tags": [
-    {
-      "name": "user",
-      "description": "Operations about user"
-    }
-  ],
   "paths": {
     "/user": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "get all user",
         "description": "This can only be done by the logged in user.",
         "operationId": "createUser",
@@ -58,9 +50,7 @@
         }
       },
       "post": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "add new user",
         "description": "This can only be done by the logged in user.",
         "operationId": "updateUser",
@@ -68,7 +58,7 @@
           {
             "name": "username",
             "in": "path",
-            "description": "name that need to be deleted",
+            "description": "name that needs to be deleted",
             "required": true,
             "schema": {
               "type": "string"
@@ -104,17 +94,15 @@
     },
     "/user/id": {
       "get": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Get user by user name",
+        "tags": ["user"],
+        "summary": "Get user by user id",
         "description": "",
         "operationId": "getUserByName",
         "parameters": [
           {
             "name": "username",
             "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
+            "description": "The name that needs to be fetched. Use user1 for testing.",
             "required": true,
             "schema": {
               "type": "string"
@@ -145,11 +133,186 @@
           }
         }
       },
-      "delete": {
-        "tags": [
-          "user"
+      "put": {
+        "tags": ["user"],
+        "summary": "change info user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
-        "summary": "Delete user",
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/post": {
+      "get": {
+        "tags": ["post"],
+        "summary": "get all post",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["post"],
+        "summary": "add new post",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update an existent user in the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/post/id": {
+      "get": {
+        "tags": ["post"],
+        "summary": "Get info one post",
+        "description": "",
+        "parameters": [
+          {
+            "in": "path",
+            "description": "The name that needs to be fetched. Use user1 for testing.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["post"],
+        "summary": "edite post info",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "The name that needs to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid username supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["post"],
+        "summary": "delete post",
         "description": "This can only be done by the logged in user.",
         "operationId": "deleteUser",
         "parameters": [
@@ -180,39 +343,39 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "format": "json",
-            "example": "admin"
+            "type": "integer",
+            "format": "int32",
+            "example": 1
           },
-          "username": {
+          "name": {
             "type": "string",
             "example": "theUser"
           },
-          "firstName": {
+          "userName": {
             "type": "string",
-            "example": "John"
-          },
-          "lastName": {
-            "type": "string",
-            "example": "James"
-          },
-          "email": {
-            "type": "string",
-            "example": "john@email.com"
+            "example": "Joh"
           },
           "password": {
             "type": "string",
             "example": "12345"
-          },
-          "phone": {
-            "type": "string",
-            "example": "12345"
-          },
-          "userStatus": {
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
             "type": "integer",
-            "description": "User Status",
             "format": "int32",
             "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "Title"
+          },
+          "dectail": {
+            "type": "string",
+            "example": "info extense"
           }
         },
         "xml": {
@@ -226,12 +389,12 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Pet"
+              "$ref": "#/components/schemas/User"
             }
           },
           "application/xml": {
             "schema": {
-              "$ref": "#/components/schemas/Pet"
+              "$ref": "#/components/schemas/Post"
             }
           }
         }
@@ -248,25 +411,6 @@
             }
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
-            }
-          }
-        }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
       }
     }
   }

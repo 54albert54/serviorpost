@@ -122,7 +122,7 @@ routerPosts.delete("/:id",
 
   controller()
     .deleted(postId,dataID)
-    .then((user) => estatusSuccess({ req, res, message: "Delete user info id "+ dataID }))
+    .then(() => estatusSuccess({ req, res, message: "Delete user info id "+ dataID }))
     .catch((error) => estatusError({ req, res, message: "error "+error }));
 }
 );

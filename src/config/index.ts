@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 export const config = {
+  isDev:process.env.ISDEV,
   port: process.env.PORT,
   secureKey: process.env.SECURE_KEY,
   mySql: {

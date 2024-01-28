@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
-import { TABLA } from "./dummy.schema";
-declare function list(table: TABLA): Promise<mysql.OkPacket | mysql.ResultSetHeader | mysql.RowDataPacket[] | [mysql.RowDataPacket[], mysql.ResultSetHeader] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ResultSetHeader[] | [string]>;
+import { TABLA, TDeleteID } from "./dummy.schema";
+declare function list(table: TABLA): Promise<[] | [string]>;
 declare function get(table: TABLA, id: string): Promise<any>;
 declare function upset(table: TABLA, data: any, id: any): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket | mysql.ResultSetHeader[] | undefined>;
 declare function query(table: TABLA, q: any): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket | mysql.ResultSetHeader[] | undefined>;
@@ -8,6 +8,7 @@ declare function update(table: TABLA, data: any, id: number): Promise<mysql.OkPa
 declare function follow(table: TABLA, data: any): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket | mysql.ResultSetHeader[] | undefined>;
 declare function getPost(table: TABLA, id: string): Promise<any>;
 declare function updatePost(table: TABLA, data: any): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket | mysql.ResultSetHeader[] | undefined>;
+declare function deletePost(table: TABLA, data: TDeleteID): Promise<mysql.OkPacket | mysql.RowDataPacket[] | mysql.RowDataPacket[][] | mysql.OkPacket[] | mysql.ProcedureCallPacket | mysql.ResultSetHeader[] | undefined>;
 export declare const store: {
     list: typeof list;
     get: typeof get;
@@ -17,5 +18,6 @@ export declare const store: {
     query: typeof query;
     getPost: typeof getPost;
     updatePost: typeof updatePost;
+    deletePost: typeof deletePost;
 };
 export {};

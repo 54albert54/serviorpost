@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request } from "express";
 declare function sign(data: string): string;
 export declare function decodeHeader(req: Request): any;
 export declare const auth: {

@@ -2,9 +2,11 @@ import mysql from "mysql2/promise";
 import { config } from "../config";
 import { TABLA, TDeleteID } from "./dummy.schema";
 
+
+
 const connectInfo = {
   host: config.mySql.host,
-  user: "root",
+  user:config.isDev == 'true'? "root" :config.mySql.user,
   database: config.mySql.database,
   password: config.mySql.password,
 };
@@ -16,7 +18,6 @@ async function list(table: TABLA) {
     const [db, fields] = await connection.query(
       `SELECT u.id , u.name FROM ${table} as u `
     );
-    // results contains rows returned by server
 
     dataBase = db as [];
   } catch (err) {
@@ -67,7 +68,6 @@ async function insert(table: TABLA, data: any) {
 }
 //update user info
 async function upset(table: TABLA, data: any, id: any) {
-  console.log("data upset", data, id);
   return id ? update(table, data, id) : insert(table, data);
 }
 async function query(table: TABLA, q: any) {
@@ -92,8 +92,6 @@ async function update(table: TABLA, data: any, id: number) {
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
-    console.log("UPDATE", { data, id });
-
     // delete data.id
     const [db, fields] = await connection.query(
       `UPDATE ${table} SET ?  WHERE id = ${id}`,
@@ -172,7 +170,6 @@ async function getPost(table: TABLA, id: string) {
     );
     // results contains rows returned by server
     const getDAta: any = db;
-    console.log("getDAta", getDAta);
 
     const { password, ...userData } = getDAta[0];
     //create a list for followers
@@ -218,8 +215,6 @@ async function viewUserLiked(table: TABLA, userTabla: TABLA, id: any) {
 
 async function deletePost(table: TABLA, data:TDeleteID) {
 
-  console.log('table , data',table , data);
-  
   const connection = await mysql.createConnection(connectInfo);
   let dataBase;
   try {
