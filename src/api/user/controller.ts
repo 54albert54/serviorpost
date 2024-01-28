@@ -1,6 +1,6 @@
 import { TABLA, TypeData } from "../../store/dummy.schema";
 import { store as backupStore } from "../../store/dummyDataBase";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import authController from "../auth";
 export const controller = (TABLA: TABLA, injectedStored: any) => {
   let store = injectedStored || null;

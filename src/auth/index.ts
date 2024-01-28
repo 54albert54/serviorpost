@@ -1,7 +1,7 @@
 import jwt, { decode } from "jsonwebtoken";
 import { Request, Response } from "express";
 import { config } from "../config";
-import { TypeData } from "../store/dummy.schema";
+
 
 const secret = config.secureKey as string;
 function sign(data: string) {

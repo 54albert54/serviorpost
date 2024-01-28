@@ -1,7 +1,7 @@
 import { auth } from "../../auth";
 import { TABLA, TypeAuth } from "../../store/dummy.schema";
 import { store as backupStore } from "../../store/mySql";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 export interface TProps {
   userName: string;
   password: string;
@@ -16,7 +16,6 @@ export const controller = (TABLA: TABLA, injectedStored: any) => {
 
     
     const data = await store.query(TABLA, { userName });
-    
       
     
     return bcrypt.compare(password, data[0].password).then(isMatch =>{
