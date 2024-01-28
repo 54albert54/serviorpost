@@ -1,4 +1,5 @@
 require("dotenv").config();
+console.log('process.env.USER',process.env.DBUSER);
 
 export const config = {
   isDev:process.env.ISDEV,
@@ -6,7 +7,7 @@ export const config = {
   secureKey: process.env.SECURE_KEY,
   mySql: {
     host: process.env.HOST,
-    user: process.env.USER,
+    user: process.env.DBUSER,
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
   },

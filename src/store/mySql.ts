@@ -2,11 +2,12 @@ import mysql from "mysql2/promise";
 import { config } from "../config";
 import { TABLA, TDeleteID } from "./dummy.schema";
 
+console.log('data',config.mySql.user);
 
 
 const connectInfo = {
   host: config.mySql.host,
-  user:config.isDev == 'true'? "root" :config.mySql.user,
+  user:config.mySql.user,
   database: config.mySql.database,
   password: config.mySql.password,
 };

@@ -4,7 +4,8 @@ import { routerAuth } from '../api/auth/network';
 import { routerPosts } from '../api/post/network';
 const swaggerUi = require('swagger-ui-express');
 
-const swaggerDoc = require('../api/swagger.json')
+
+const swaggerDoc = require('../../public/swagger.json')
 const routerApi = (app:any)=>{
   const router = express.Router();
   app.use('/api',router);
@@ -12,6 +13,8 @@ const routerApi = (app:any)=>{
   router.use('/user',routerUser);
   router.use('/auth', routerAuth)
   router.use('/post', routerPosts)
+  
+  
 
 }
 

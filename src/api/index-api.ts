@@ -14,8 +14,12 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 app.get("/", (_req: any, res: any) => {
   res.sendFile(path.join(__dirname, "index.html"));
-  //res.send('esto es desde mi archivo index');
+
 });
+app.get('/qw',(req,res)=>{
+  res.json({msg:'hola'})
+})
+
 
 //Routers
 
