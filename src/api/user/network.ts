@@ -23,13 +23,21 @@ routerUser.get("/:id", async (req: Request, res: Response) => {
 // crear un usuario nuevo
 routerUser.post("/", async (req: Request, res: Response) => {
   const body = req.body;
-
-  controller()
-    .upset(body)
+  if (body.password == body.secondPassword){
+    const {secondPassword , ...goodData} =  body
+     controller()
+    .upset(goodData)
     .then((user) =>
-      estatusSuccess({ req, res, message: { title: "new user add ", user } })
+      estatusSuccess({ req, res, message: { title: "new user added "} })
     )
     .catch((error) => estatusError({ req, res, message: "error " + error }));
+  }else{
+    estatusError({res,message:'the passwords need be the equals'})
+ 
+}
+  
+
+
 });
 
 // editar ya un usuario desde que este login
