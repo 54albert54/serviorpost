@@ -24,11 +24,14 @@ routerUser.get("/:id", async (req: Request, res: Response) => {
 routerUser.post("/", async (req: Request, res: Response) => {
   const body = req.body;
   if (body.password == body.secondPassword){
+    let dataResponse = body
+    delete dataResponse.secondPassword
     const {secondPassword , ...goodData} =  body
+   
      controller()
     .upset(goodData)
     .then((user) =>
-      estatusSuccess({ req, res, message: { title: "new user added "} })
+      estatusSuccess({ req, res, message: { title: "new user added ",newDataUser: dataResponse} })
     )
     .catch((error) => estatusError({ req, res, message: "error " + error }));
   }else{
