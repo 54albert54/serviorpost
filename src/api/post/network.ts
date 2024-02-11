@@ -13,10 +13,21 @@ type TEditPost = {
 const routerPosts = express.Router();
 
 routerPosts.get("/", async (req: Request, res: Response) => {
+
+  //TODO check auth antes de ver post
+   const isLogin = req.headers.authorization
+
+    
+    
+  if(isLogin){ 
   controller()
     .list()
     .then((list) => estatusSuccess({ req, res, message: list }))
     .catch((error) => estatusError({ req, res, message: "error " + error }));
+} else{
+  estatusError({ req, res, message: "Login first "  })
+}
+
 });
 routerPosts.get("/:id", async (req: Request, res: Response) => {
   controller()

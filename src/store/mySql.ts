@@ -31,7 +31,7 @@ async function list(table: TABLA) {
   let dataBase;
   try {
     const [db, fields] = await connection.query(
-      `SELECT u.id , u.name FROM ${table} as u `
+      `SELECT u.id , u.name , u.userName  FROM ${table} as u `
     );
 
     dataBase = db as [];

@@ -15,14 +15,17 @@ function getToken(auth: string): string {
     throw new Error(" Error token invalido");
   }
   let token = auth.replace("Bearer ", "");
-  return token;
+  return token; 
 }
 
 function verify(token: string) {
+
   return jwt.verify(token, secret);
 }
 
 export function decodeHeader(req: Request): any {
+  
+  
   const authorization = req.headers.authorization || "";
   const token = getToken(authorization);
   const decoded = verify(token);
