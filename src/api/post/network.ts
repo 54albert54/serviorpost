@@ -19,7 +19,7 @@ routerPosts.get("/", async (req: Request, res: Response) => {
 
     
     
-  if(isLogin){ 
+  if(true){ 
   controller()
     .list()
     .then((list) => estatusSuccess({ req, res, message: list }))
