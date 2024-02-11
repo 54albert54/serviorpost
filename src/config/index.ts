@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const isDev = process.env.ISDEV != 'true'
+const isDev = process.env.ISDEV === 'true'
 
 console.log('isDev ',isDev);
 
