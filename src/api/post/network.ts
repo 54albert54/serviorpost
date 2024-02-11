@@ -77,6 +77,9 @@ routerPosts.put("/:id", async (req: Request, res: Response) => {
 
 routerPosts.post("/", async (req: Request, res: Response) => {
   const post = req.body;
+  const data ={token:req.headers.authorization , body: post}
+  console.log('data',data);
+  
 
   try {
     const user = decodeHeader(req) || "ss ";
@@ -87,6 +90,7 @@ routerPosts.post("/", async (req: Request, res: Response) => {
       const dataPost = {
         title: req.body.title,
         detail: req.body.detail,
+        img: req.body.img,
         owner_id: user.id,
       };
 

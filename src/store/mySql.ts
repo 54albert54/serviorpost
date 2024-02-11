@@ -186,7 +186,7 @@ async function listPost(table: TABLA) {
   let dataBase;
   try {
     const [db, fields] = await connection.query(
-      `SELECT ps.id ,ps.title , ps.detail, ps.imagen  , us.name as ownerUser FROM ${table} as ps INNER JOIN ${TABLA.USER} as us on ps.owner_id = us.id`
+      `SELECT ps.id ,ps.title , ps.detail, ps.img  , us.userName as ownerUser FROM ${table} as ps INNER JOIN ${TABLA.USER} as us on ps.owner_id = us.id ORDER BY ps.id DESC`
     );
 
     dataBase = db as [];
@@ -201,7 +201,7 @@ async function getPost(table: TABLA, id: string) {
  
   try {
     const [db, fields] = await connection.query(
-      `SELECT p.id , p.title ,p.detail , p.imagen ,u.userName as owner_name FROM ${table} as p INNER JOIN user as u on p.owner_id = u.id  WHERE p.id = ${id} `
+      `SELECT p.id , p.title ,p.detail , p.img ,u.userName as owner_name FROM ${table} as p INNER JOIN user as u on p.owner_id = u.id  WHERE p.id = ${id} `
     );
     // results contains rows returned by server
     const getDAta: any = db;

@@ -1,11 +1,11 @@
 require("dotenv").config();
 
-const isDev = process.env.ISDEV == 'true'
+const isDev = process.env.ISDEV != 'true'
 
 console.log('isDev ',isDev);
 
 export const config = {
-  isDev:process.env.ISDEV,
+  isDev:process.env.ISDEV, 
   port: process.env.PORT,
   secureKey: process.env.SECURE_KEY,
   mySql: {
