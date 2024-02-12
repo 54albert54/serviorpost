@@ -19,7 +19,7 @@ routerPosts.get("/", async (req: Request, res: Response) => {
 
     
     
-  if(true){ 
+  if(isLogin){ 
   controller()
     .list()
     .then((list) => estatusSuccess({ req, res, message: list }))
@@ -90,6 +90,8 @@ routerPosts.post("/", async (req: Request, res: Response) => {
       const dataPost = {
         title: req.body.title,
         detail: req.body.detail,
+        videoUrl:req.body.videoUrl,
+        location:req.body.location,  
         img: req.body.img,
         owner_id: user.id,
       };
